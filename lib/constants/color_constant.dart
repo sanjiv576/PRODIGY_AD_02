@@ -14,5 +14,5 @@ class KColors {
 
   // button color
   static const Color lightButtonColor = Colors.blue;
-  static const Color darkButtonColor = Color(0xFF881337);
+  static const Color darkButtonColor = Colors.pink;
 }
