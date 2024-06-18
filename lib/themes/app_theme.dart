@@ -8,10 +8,15 @@ class AppThemes {
       brightness: Brightness.light,
       useMaterial3: true,
       textTheme: KTextThemes.lightTextTheme(),
-      buttonTheme: ButtonThemeData(
-        buttonColor: KColors.lightButtonColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+      fontFamily: 'WorkSans',
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: TextButton.styleFrom(
+          elevation: 5.0,
+          backgroundColor: KColors.lightButtonColor, // button background color
+
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
         ),
       ),
     );
@@ -22,10 +27,15 @@ class AppThemes {
       brightness: Brightness.dark,
       useMaterial3: true,
       textTheme: KTextThemes.darkTextTheme(),
-      fontFamily: 'Roboto',
-      buttonTheme: const ButtonThemeData(
-        buttonColor: KColors.darkButtonColor,
-        splashColor: Colors.yellow,
+      fontFamily: 'WorkSans',
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: TextButton.styleFrom(
+          elevation: 5.0,
+          backgroundColor: KColors.darkButtonColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+        ),
       ),
     );
   }
