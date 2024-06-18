@@ -13,6 +13,6 @@ class KColors {
   static const Color darkTextColor = Colors.white;
 
   // button color
-  static const Color lightButtonColor = Colors.blue;
+  static const Color lightButtonColor = Color.fromARGB(255, 5, 121, 216);
   static const Color darkButtonColor = Colors.pink;
 }

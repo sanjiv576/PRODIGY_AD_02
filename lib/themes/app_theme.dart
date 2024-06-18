@@ -19,6 +19,17 @@ class AppThemes {
           ),
         ),
       ),
+      iconTheme: const IconThemeData(
+        color: KColors.lightTextColor,
+        size: 30,
+      ),
+      tabBarTheme: TabBarTheme(
+        indicator: BoxDecoration(
+          color: KColors.lightButtonColor,
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(12),
+        ),
+      ),
     );
   }
 
@@ -28,6 +39,10 @@ class AppThemes {
       useMaterial3: true,
       textTheme: KTextThemes.darkTextTheme(),
       fontFamily: 'WorkSans',
+      iconTheme: const IconThemeData(
+        color: KColors.darkTextColor,
+        size: 30,
+      ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: TextButton.styleFrom(
           elevation: 5.0,
@@ -35,6 +50,13 @@ class AppThemes {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
+        ),
+      ),
+      tabBarTheme: TabBarTheme(
+        indicator: BoxDecoration(
+          color: KColors.darkButtonColor,
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(12),
         ),
       ),
     );

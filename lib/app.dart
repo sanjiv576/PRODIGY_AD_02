@@ -9,7 +9,7 @@ class AppView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: AppThemes.appLightTheme(),
+      theme: AppThemes.appDarkTheme(),
       initialRoute: AppRoutes.introRoute,
       routes: AppRoutes.getAppRoutes(),
     );
