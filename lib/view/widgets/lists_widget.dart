@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../constants/color_constant.dart';
-import '../../data/data.dart';
 import '../../models/list_entity.dart';
 import '../../models/todo_entity.dart';
 import '../home_view.dart';
