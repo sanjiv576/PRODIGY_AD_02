@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../models/list_entity.dart';
+import '../services/todo_list.dart';
+import '../data/data.dart';
+import 'widgets/lists_widget.dart';
 import '../constants/color_constant.dart';
 import 'widgets/top_bar_widget.dart';
 
@@ -20,14 +24,28 @@ class _HomeViewState extends ConsumerState<HomeView>
 
   late TabController _tabController;
 
-  final List<String> allList = [];
-  final List<String> pinnedList = [];
+  List<ListEntity> allTodosList = [];
+  List<ListEntity> pinnedList = [];
 
   @override
   void initState() {
     super.initState();
 
     _tabController = TabController(length: 2, vsync: this);
+
+    allTodosList = Data.allList;
+
+    pinnedList = getPinnedList();
+  }
+
+  List<ListEntity> getPinnedList() {
+    List<ListEntity> filteredPinnedLists = [];
+    for (ListEntity singleEntity in allTodosList) {
+      if (singleEntity.isPinned == true) {
+        filteredPinnedLists.add(singleEntity);
+      }
+    }
+    return filteredPinnedLists;
   }
 
   @override
@@ -43,17 +61,19 @@ class _HomeViewState extends ConsumerState<HomeView>
     isDarkValue = ref.watch(isDarkThemeProvider);
 
     return Scaffold(
-      floatingActionButton: IconButton.filled(
-        color: Colors.white,
-        highlightColor: Colors.green,
-        style: ButtonStyle(
-          backgroundColor: isDarkValue
-              ? const WidgetStatePropertyAll(KColors.darkButtonColor)
-              : const WidgetStatePropertyAll(KColors.lightButtonColor),
-        ),
-        onPressed: () {},
-        icon: const Icon(Icons.add),
-      ),
+      floatingActionButton: allTodosList.isEmpty
+          ? null
+          : IconButton.filled(
+              color: Colors.white,
+              highlightColor: Colors.green,
+              style: ButtonStyle(
+                backgroundColor: isDarkValue
+                    ? const WidgetStatePropertyAll(KColors.darkButtonColor)
+                    : const WidgetStatePropertyAll(KColors.lightButtonColor),
+              ),
+              onPressed: () {},
+              icon: const Icon(Icons.add),
+            ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -91,21 +111,21 @@ class _HomeViewState extends ConsumerState<HomeView>
                   child: TabBarView(
                 controller: _tabController,
                 children: <Widget>[
-                  allList.isEmpty
+                  allTodosList.isEmpty
                       ? const EmptyListWidgets(
                           imageName: 'write_todo.png',
                           message: 'Create your first to-do-list...',
                         )
-                      : const Center(
-                          child: Text('all'),
+                      : ListsWidget(
+                          filteredTodoList: allTodosList,
                         ),
                   pinnedList.isEmpty
                       ? const EmptyListWidgets(
                           imageName: 'search.png',
                           message: 'Ooops! No pinned list yet...',
                         )
-                      : const Center(
-                          child: Text('pinned'),
+                      : ListsWidget(
+                          filteredTodoList: pinnedList,
                         ),
                 ],
               )),

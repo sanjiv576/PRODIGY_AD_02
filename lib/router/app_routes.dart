@@ -1,7 +1,6 @@
 import '../view/create_new_list_view.dart';
-import '../view/intro_view.dart';
-
 import '../view/home_view.dart';
+import '../view/intro_view.dart';
 
 class AppRoutes {
   AppRoutes._();
