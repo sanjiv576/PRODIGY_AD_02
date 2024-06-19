@@ -1,5 +1,5 @@
-import 'package:todolist/view/create_new_list_view.dart';
-import 'package:todolist/view/intro_view.dart';
+import '../view/create_new_list_view.dart';
+import '../view/intro_view.dart';
 
 import '../view/home_view.dart';
 

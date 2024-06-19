@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todolist/router/app_routes.dart';
+import '../router/app_routes.dart';
 
 class IntroView extends StatelessWidget {
   const IntroView({super.key});
@@ -25,7 +25,7 @@ class IntroView extends StatelessWidget {
             verticalGap,
             Text(
               'Write what you need to do and remember it.',
-              style: Theme.of(context).textTheme.labelMedium,
+              style: Theme.of(context).textTheme.labelSmall,
               textAlign: TextAlign.center,
             ),
             verticalGap,

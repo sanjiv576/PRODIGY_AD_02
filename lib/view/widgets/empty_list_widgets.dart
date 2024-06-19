@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import '../../router/app_routes.dart';
 
 class EmptyListWidgets extends StatelessWidget {
+  final String message;
+  final String imageName;
   const EmptyListWidgets({
     super.key,
+    required this.message,
+    required this.imageName,
   });
 
   @override
@@ -12,10 +16,10 @@ class EmptyListWidgets extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image.asset('assets/images/write_todo.png'),
+        Image.asset('assets/images/$imageName'),
         const SizedBox(height: 32),
         Text(
-          'Create your first to-do-list...',
+          message,
           style: Theme.of(context).textTheme.labelSmall,
         ),
         const SizedBox(height: 32),
