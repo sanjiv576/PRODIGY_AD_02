@@ -1,21 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../constants/color_constant.dart';
+import 'widgets/top_bar_widget.dart';
 
 import 'widgets/empty_list_widgets.dart';
 
-class HomeView extends StatefulWidget {
+final isDarkThemeProvider = StateProvider<bool>((ref) => false);
+
+class HomeView extends ConsumerStatefulWidget {
   const HomeView({super.key});
 
   @override
-  State<HomeView> createState() => _HomeViewState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView>
+class _HomeViewState extends ConsumerState<HomeView>
     with SingleTickerProviderStateMixin {
   final verticalGap = const SizedBox(height: 16);
 
   late TabController _tabController;
 
-  final List<String> list = [];
+  final List<String> allList = [];
+  final List<String> pinnedList = [];
 
   @override
   void initState() {
@@ -30,33 +36,31 @@ class _HomeViewState extends State<HomeView>
     super.dispose();
   }
 
+  late bool isDarkValue;
+
   @override
   Widget build(BuildContext context) {
+    isDarkValue = ref.watch(isDarkThemeProvider);
+
     return Scaffold(
+      floatingActionButton: IconButton.filled(
+        color: Colors.white,
+        highlightColor: Colors.green,
+        style: ButtonStyle(
+          backgroundColor: isDarkValue
+              ? const WidgetStatePropertyAll(KColors.darkButtonColor)
+              : const WidgetStatePropertyAll(KColors.lightButtonColor),
+        ),
+        onPressed: () {},
+        icon: const Icon(Icons.add),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              Row(
-                children: [
-                  Image.asset(
-                    'assets/images/small_logo.png',
-                    width: 26,
-                    height: 26,
-                  ),
-                  Text(
-                    'TODO LIST',
-                    style: Theme.of(context).textTheme.labelLarge,
-                  ),
-                  const Spacer(),
-                  IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.search,
-                      ))
-                ],
-              ),
+              // top bar widget contains button icons, text, image
+              TopBarWidget(ref: ref, isDarkValue: isDarkValue),
               verticalGap,
               TabBar(
                 indicatorWeight: 0.01,
@@ -84,23 +88,27 @@ class _HomeViewState extends State<HomeView>
               ),
               verticalGap,
               Expanded(
-                child: Builder(builder: (context) {
-                  if (list.isEmpty) {
-                    return const EmptyListWidgets();
-                  }
-                  return TabBarView(
-                    controller: _tabController,
-                    children: const <Widget>[
-                      Center(
-                        child: Text('all'),
-                      ),
-                      Center(
-                        child: Text('pinned'),
-                      ),
-                    ],
-                  );
-                }),
-              ),
+                  child: TabBarView(
+                controller: _tabController,
+                children: <Widget>[
+                  allList.isEmpty
+                      ? const EmptyListWidgets(
+                          imageName: 'write_todo.png',
+                          message: 'Create your first to-do-list...',
+                        )
+                      : const Center(
+                          child: Text('all'),
+                        ),
+                  pinnedList.isEmpty
+                      ? const EmptyListWidgets(
+                          imageName: 'search.png',
+                          message: 'Ooops! No pinned list yet...',
+                        )
+                      : const Center(
+                          child: Text('pinned'),
+                        ),
+                ],
+              )),
             ],
           ),
         ),
