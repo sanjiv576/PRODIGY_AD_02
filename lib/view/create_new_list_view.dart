@@ -2,13 +2,12 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:todolist/constants/color_constant.dart';
-import 'package:todolist/models/todo_entity.dart';
-import 'package:todolist/services/todo_list.dart';
-import 'package:todolist/view/home_view.dart';
-import 'package:todolist/view/widgets/show_snackbar.dart';
+import '../constants/color_constant.dart';
+import '../models/todo_entity.dart';
+import '../services/todo_list.dart';
+import 'home_view.dart';
+import 'widgets/show_snackbar.dart';
 
-import '../data/data.dart';
 import '../models/list_entity.dart';
 
 class CreateNewListView extends ConsumerStatefulWidget {
@@ -25,7 +24,6 @@ class _CreateNewListViewState extends ConsumerState<CreateNewListView> {
   final _formKey = GlobalKey<FormState>();
   TodoList todoList = TodoList();
 
-  // ListEntity? newListEntity = Data.allList[0];
   ListEntity? newListEntity;
 
   final verticalGap = const SizedBox(height: 16);

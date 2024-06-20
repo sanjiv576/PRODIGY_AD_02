@@ -1,6 +1,11 @@
+import 'dart:developer';
+
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:todolist/router/app_routes.dart';
+import '../router/app_routes.dart';
+import '../state/todo_state.dart';
+import 'widgets/show_snackbar.dart';
 import '../models/list_entity.dart';
 import '../data/data.dart';
 import 'widgets/lists_widget.dart';
@@ -28,8 +33,16 @@ class _HomeViewState extends ConsumerState<HomeView>
   List<ListEntity> pinnedList = [];
 
   void _getUpdateData() {
+    log('Refeshing....');
+    showSnackbarMsg(
+      context: context,
+      targetTitle: 'Refresh',
+      targetMessage: 'Refreshing..',
+      type: ContentType.success,
+    );
     setState(() {
-      allTodosList = Data.allList;
+      // allTodosList = Data.allList;
+      allTodosList = TodoState.todoListState;
 
       pinnedList = getPinnedList();
     });
@@ -41,7 +54,11 @@ class _HomeViewState extends ConsumerState<HomeView>
 
     _tabController = TabController(length: 2, vsync: this);
 
-    _getUpdateData();
+    // allTodosList = Data.allList;
+    allTodosList = TodoState.todoListState;
+
+    pinnedList = getPinnedList();
+    // _getUpdateData();
   }
 
   List<ListEntity> getPinnedList() {
@@ -104,13 +121,13 @@ class _HomeViewState extends ConsumerState<HomeView>
               ],
             ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: RefreshIndicator(
-            key: _refreshIndicatorKey,
-            onRefresh: () async {
-              _getUpdateData();
-            },
+        child: RefreshIndicator(
+          key: _refreshIndicatorKey,
+          onRefresh: () async {
+            _getUpdateData();
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
                 // top bar widget contains button icons, text, image
