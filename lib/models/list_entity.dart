@@ -1,7 +1,7 @@
 import 'todo_entity.dart';
 
 class ListEntity {
-  final int id;
+  final String id;
   final String title;
   bool isPinned;
   final String label;

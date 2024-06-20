@@ -1,5 +1,5 @@
 class TodoEntity {
-  final int id;
+  final String id;
   final String todo;
 
   final bool isComplete;
