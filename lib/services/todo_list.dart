@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:uuid/uuid.dart';
 
-import '../models/list_entity.dart';
-import '../models/todo_entity.dart';
+import '../entities/list_entity.dart';
+import '../entities/todo_entity.dart';
 import '../state/todo_state.dart';
 import 'date_time_converter.dart';
 

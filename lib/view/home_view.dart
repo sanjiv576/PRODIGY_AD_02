@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants/color_constant.dart';
-import '../models/list_entity.dart';
+import '../entities/list_entity.dart';
 import '../router/app_routes.dart';
 import '../state/todo_list_notifier.dart';
 import 'widgets/empty_list_widgets.dart';

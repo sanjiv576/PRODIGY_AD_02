@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../models/list_entity.dart';
+import '../../entities/list_entity.dart';
 
 class HorizontalRowLabelWidgets extends StatelessWidget {
   const HorizontalRowLabelWidgets({

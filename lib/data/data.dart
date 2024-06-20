@@ -1,5 +1,5 @@
-import '../models/list_entity.dart';
-import '../models/todo_entity.dart';
+import '../entities/list_entity.dart';
+import '../entities/todo_entity.dart';
 
 class Data {
   static List<ListEntity> allList = [

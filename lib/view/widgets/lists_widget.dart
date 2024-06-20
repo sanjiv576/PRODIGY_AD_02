@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../constants/color_constant.dart';
-import '../../models/list_entity.dart';
-import '../../models/todo_entity.dart';
+import '../../entities/list_entity.dart';
+import '../../entities/todo_entity.dart';
 import '../home_view.dart';
 import 'horizontal_row_label_widgets.dart';
 

@@ -1,4 +1,4 @@
-import '../models/list_entity.dart';
+import '../entities/list_entity.dart';
 
 class TodoState {
   TodoState._();

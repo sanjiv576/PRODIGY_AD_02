@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../models/list_entity.dart';
+import '../entities/list_entity.dart';
 
 class TodoListNotifier extends StateNotifier<List<ListEntity>> {
   TodoListNotifier() : super([]);
