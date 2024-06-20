@@ -1,12 +1,13 @@
 import 'dart:developer';
 
-import '../models/list_entity.dart';
-import '../models/todo_entity.dart';
-import 'date_time_converter.dart';
-import '../state/todo_state.dart';
 import 'package:uuid/uuid.dart';
 
-import '../data/data.dart';
+import '../models/list_entity.dart';
+import '../models/todo_entity.dart';
+import '../state/todo_state.dart';
+import 'date_time_converter.dart';
+
+// import '../data/data.dart';
 
 enum LabelEnum {
   perosnal('Personal'),
@@ -61,6 +62,7 @@ class TodoList {
       id: const Uuid().v4(),
       title: title,
       label: label,
+      isPinned: isPinned,
       date: DateTimeConverter.getCurrentDate(),
       todos: [newTodoEnity], // add todo at index 0
       time: DateTimeConverter.getCurrentTime(),
@@ -69,5 +71,18 @@ class TodoList {
     TodoState.todoListState.add(newTodoList);
 
     return newTodoList;
+  }
+
+  List<ListEntity> getPinnedList() {
+    if (TodoState.todoListState.isEmpty) {
+      return [];
+    }
+
+    // add each pinned list here
+    List<ListEntity> pinnedList = TodoState.todoListState
+        .where((singleListEntity) => singleListEntity.isPinned == true)
+        .toList();
+
+    return pinnedList;
   }
 }

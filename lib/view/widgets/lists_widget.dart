@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -46,7 +44,6 @@ class _AllListsWidgetState extends ConsumerState<ListsWidget> {
             setState(() {
               isExpandedList[index] = !isExpandedList[index];
             });
-            log('isExpanded: ${isExpandedList[index]}');
           },
           child: Card(
             color: isDark
