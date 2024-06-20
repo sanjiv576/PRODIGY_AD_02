@@ -2,6 +2,8 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../state/todo_list_notifier.dart';
+import '../state/todo_state.dart';
 import '../constants/color_constant.dart';
 import '../models/todo_entity.dart';
 import '../services/todo_list.dart';
@@ -71,14 +73,17 @@ class _CreateNewListViewState extends ConsumerState<CreateNewListView> {
       String title = _titleController.text.trim();
       String todo = _todoController.text.trim();
 
-      newListEntity = todoList.createTodoList(
-        title: title,
-        todo: todo,
-        label: chosenLabel!,
-        isPinned: isPinned,
-        newList: newListEntity, // is passed to track this list is old or new
-      );
-      setState(() {}); // update state
+      setState(() {
+        newListEntity = todoList.createTodoList(
+          title: title,
+          todo: todo,
+          label: chosenLabel!,
+          isPinned: isPinned,
+          newList: newListEntity, // is passed to track this list is old or new
+        );
+      }); // update state
+
+      ref.read(todoListProvider.notifier).setTodoList(TodoState.todoListState);
 
       showSnackbarMsg(
         context: context,
