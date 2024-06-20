@@ -1,8 +1,10 @@
 import 'dart:developer';
 
-import 'package:todolist/models/list_entity.dart';
-import 'package:todolist/models/todo_entity.dart';
-import 'package:todolist/services/date_time_converter.dart';
+import '../models/list_entity.dart';
+import '../models/todo_entity.dart';
+import 'date_time_converter.dart';
+import '../state/todo_state.dart';
+import 'package:uuid/uuid.dart';
 
 import '../data/data.dart';
 
@@ -20,23 +22,15 @@ enum LabelEnum {
 
 class TodoList {
   ListEntity _addTodo({required String todo, required ListEntity existList}) {
-    TodoEntity newTodoEnity =
-        TodoEntity(id: existList.todos.length, todo: todo);
+    TodoEntity newTodoEnity = TodoEntity(id: const Uuid().v4(), todo: todo);
 
-    // now add to the actual data
-
-    for (ListEntity singleListEntity in Data.allList) {
+    for (ListEntity singleListEntity in TodoState.todoListState) {
       if (singleListEntity.id == existList.id) {
         // add todo to the existing list
         singleListEntity.todos.add(newTodoEnity);
-
-        
         break;
       }
     }
-
-    // overriding to the existing list
-    existList.todos.add(newTodoEnity);
 
     return existList;
   }
@@ -59,14 +53,12 @@ class TodoList {
     // ----------- for creating only new list of todos ------------------------------
 
     TodoEntity newTodoEnity = TodoEntity(
-      id: 1,
+      id: const Uuid().v4(),
       todo: todo,
     );
 
-    int newId = Data.allList.length;
-
     ListEntity newTodoList = ListEntity(
-      id: newId,
+      id: const Uuid().v4(),
       title: title,
       label: label,
       date: DateTimeConverter.getCurrentDate(),
@@ -74,9 +66,7 @@ class TodoList {
       time: DateTimeConverter.getCurrentTime(),
     );
 
-    // add to data
-
-    Data.allList.add(newTodoList);
+    TodoState.todoListState.add(newTodoList);
 
     return newTodoList;
   }
