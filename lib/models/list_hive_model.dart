@@ -26,7 +26,7 @@ class ListHiveModel extends HiveObject {
   final String time;
 
   @HiveField(6)
-  List<TodoHiveModel> todos;  // hive model of todo
+  List<TodoHiveModel> todos; // hive model of todo
 
   ListHiveModel({
     required this.id,
@@ -57,7 +57,9 @@ class ListHiveModel extends HiveObject {
       title: title,
       label: label,
       date: date,
-      todos: todos.map((todoHiveModel) => todoHiveModel.toEntity()).toList(),  // convert each todo hive model into todo entity
+      todos: todos
+          .map((todoHiveModel) => todoHiveModel.toEntity())
+          .toList(), // convert each todo hive model into todo entity
       time: time,
       isPinned: isPinned,
     );
@@ -72,14 +74,19 @@ class ListHiveModel extends HiveObject {
       label: entity.label,
       date: entity.date,
       time: entity.time,
-      todos: TodoHiveModel.fromEntityList(entity.todos), // converted each todo entity into todoHiveModel
-
+      todos: TodoHiveModel.fromEntityList(
+          entity.todos), // converted each todo entity into todoHiveModel
     );
   }
 
   // convert entity list into list of hive model
   static List<ListHiveModel> fromEntityList(List<ListEntity> entities) {
     return entities.map((entity) => ListHiveModel.fromEntity(entity)).toList();
+  }
+
+  // convert hive model list into list of entities
+  static List<ListEntity> toEntityList(List<ListHiveModel> hiveModels) {
+    return hiveModels.map((hiveModel) => hiveModel.toEntity()).toList();
   }
 
   @override
