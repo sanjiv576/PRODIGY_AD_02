@@ -1,19 +1,20 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:todolist/services/hive_services.dart';
 
 import '../entities/list_entity.dart';
 
 class TodoListNotifier extends StateNotifier<List<ListEntity>> {
-  TodoListNotifier() : super([]);
+  TodoListNotifier() : super(HiveServices.getAllListsHive());  // fetch data from db
 
   void setTodoList(List<ListEntity> todoList) {
     state = todoList;
   }
 
-  void addTodoList(ListEntity newList) {
+  void addList(ListEntity newList) {
     state = [...state, newList];
   }
 
-  void updateTodoList(ListEntity updatedList) {
+  void updateList(ListEntity updatedList) {
     state = [
       for (final list in state)
         if (list.id == updatedList.id) updatedList else list
@@ -25,6 +26,7 @@ class TodoListNotifier extends StateNotifier<List<ListEntity>> {
   }
 }
 
-final todoListProvider = StateNotifierProvider<TodoListNotifier, List<ListEntity>>((ref) {
+final todoListProvider =
+    StateNotifierProvider<TodoListNotifier, List<ListEntity>>((ref) {
   return TodoListNotifier();
 });
