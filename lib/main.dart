@@ -4,8 +4,8 @@ import 'package:todolist/services/hive_services.dart';
 
 import 'app.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  HiveServices.onInit();
+  await HiveServices.onInit();
   runApp(const ProviderScope(child: AppView()));
 }
