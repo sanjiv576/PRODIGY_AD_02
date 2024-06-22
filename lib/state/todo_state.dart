@@ -1,7 +1,9 @@
+import 'package:todolist/services/hive_services.dart';
+
 import '../entities/list_entity.dart';
 
 class TodoState {
   TodoState._();
 
-  static List<ListEntity> todoListState = [];
+  static List<ListEntity> todoListState = HiveServices.getAllListsHive();
 }
