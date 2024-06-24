@@ -58,7 +58,7 @@ class _CreateNewListViewState extends ConsumerState<CreateNewListView> {
     _todoController.clear();
   }
 
-  void _submit() {
+  void _submit() async {
     if (_formKey.currentState!.validate()) {
       if (chosenLabel == null) {
         showSnackbarMsg(
@@ -73,17 +73,16 @@ class _CreateNewListViewState extends ConsumerState<CreateNewListView> {
       String title = _titleController.text.trim();
       String todo = _todoController.text.trim();
 
-      setState(() {
-        newListEntity = todoList.createTodoList(
-          title: title,
-          todo: todo,
-          label: chosenLabel!,
-          isPinned: isPinned,
-          newList: newListEntity, // is passed to track this list is old or new
-        );
-      }); // update state
+      newListEntity = await todoList.createTodoList(
+        title: title,
+        todo: todo,
+        label: chosenLabel!,
+        isPinned: isPinned,
+        newList: newListEntity, // is passed to track this list is old or new
+      );
+      setState(() {}); // update state
 
-      ref.read(todoListProvider.notifier).setTodoList(TodoState.todoListState);
+      ref.watch(todoListProvider.notifier).setTodoList(TodoState.todoListState);
 
       showSnackbarMsg(
         context: context,
