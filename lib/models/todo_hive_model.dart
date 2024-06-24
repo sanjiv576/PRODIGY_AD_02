@@ -1,6 +1,6 @@
 import 'package:hive/hive.dart';
-import 'package:todolist/constants/hive_table_constants.dart';
-import 'package:todolist/entities/todo_entity.dart';
+import '../constants/hive_table_constants.dart';
+import '../entities/todo_entity.dart';
 
 part 'todo_hive_model.g.dart';
 

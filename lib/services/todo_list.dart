@@ -1,8 +1,8 @@
 import 'dart:developer';
 
-import 'package:todolist/models/list_hive_model.dart';
-import 'package:todolist/models/todo_hive_model.dart';
-import 'package:todolist/services/hive_services.dart';
+import '../models/list_hive_model.dart';
+import '../models/todo_hive_model.dart';
+import 'hive_services.dart';
 import 'package:uuid/uuid.dart';
 
 import '../entities/list_entity.dart';

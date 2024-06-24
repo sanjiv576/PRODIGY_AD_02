@@ -1,8 +1,8 @@
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:todolist/constants/hive_table_constants.dart';
-import 'package:todolist/models/list_hive_model.dart';
-import 'package:todolist/models/todo_hive_model.dart';
+import '../constants/hive_table_constants.dart';
+import '../models/list_hive_model.dart';
+import '../models/todo_hive_model.dart';
 
 import '../entities/list_entity.dart';
 

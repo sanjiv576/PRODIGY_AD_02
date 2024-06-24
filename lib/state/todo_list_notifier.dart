@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:todolist/services/hive_services.dart';
+import '../services/hive_services.dart';
 
 import '../entities/list_entity.dart';
 

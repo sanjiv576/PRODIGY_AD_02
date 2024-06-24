@@ -1,7 +1,7 @@
 import 'package:hive/hive.dart';
-import 'package:todolist/constants/hive_table_constants.dart';
-import 'package:todolist/entities/list_entity.dart';
-import 'package:todolist/models/todo_hive_model.dart';
+import '../constants/hive_table_constants.dart';
+import '../entities/list_entity.dart';
+import 'todo_hive_model.dart';
 
 part 'list_hive_model.g.dart';
 
