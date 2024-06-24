@@ -1,14 +1,14 @@
 import 'dart:developer';
 
-import '../models/list_hive_model.dart';
-import '../models/todo_hive_model.dart';
-import 'hive_services.dart';
 import 'package:uuid/uuid.dart';
 
 import '../entities/list_entity.dart';
 import '../entities/todo_entity.dart';
+import '../models/list_hive_model.dart';
+import '../models/todo_hive_model.dart';
 import '../state/todo_state.dart';
 import 'date_time_converter.dart';
+import 'hive_services.dart';
 
 // import '../data/data.dart';
 
@@ -99,5 +99,94 @@ class TodoList {
         .toList();
 
     return pinnedList;
+  }
+
+  // complete a single todo
+
+  void completeTodo({
+    required String listId,
+    required TodoEntity todoEntity,
+  }) async {
+    List<ListEntity> updatedList = [];
+    List<TodoEntity> updatedTodo = [];
+
+    for (ListEntity list in TodoState.todoListState) {
+      if (list.id == listId) {
+        for (TodoEntity todo in list.todos) {
+          // TodoEntity newTodo = TodoEntity(id: todo.id, todo: todo)
+          if (todo.id == todoEntity.id) {
+            todo.isComplete = todoEntity.isComplete;
+          }
+          updatedTodo.add(todo);
+        }
+      }
+      updatedList.add(list);
+      updatedTodo = [];
+    }
+
+    TodoState.todoListState = updatedList;
+
+    // save in the db
+    await HiveServices.completeSingleTodo(
+      listEntityId: listId,
+      todoEntity: todoEntity,
+    );
+  }
+
+  // Update a single todo
+  Future<ListEntity> updateTodo({
+    required ListEntity listEntity,
+    required TodoEntity todoEntity,
+  }) async {
+    List<ListEntity> updatedList = [];
+
+    for (ListEntity list in TodoState.todoListState) {
+      if (list.id == listEntity.id) {
+        List<TodoEntity> updatedTodoList = [];
+
+        for (TodoEntity singleTodo in list.todos) {
+          if (singleTodo.id == todoEntity.id) {
+            // update the todo with the new values
+            singleTodo = todoEntity;
+          }
+          // add the (possibly updated) todo to the updated todo list
+          updatedTodoList.add(singleTodo);
+        }
+
+        // add the updated list to the updated list collection
+        updatedList.add(ListEntity(
+          id: list.id,
+          title: list.title,
+          label: list.label,
+          date: list.date,
+          todos: updatedTodoList,
+          time: list.time,
+          isPinned: list.isPinned,
+        ));
+      } else {
+        // if the list does not match, add it unchanged to the updated list collection
+        updatedList.add(list);
+      }
+    }
+
+    // update the global state with the new list of lists
+    TodoState.todoListState = updatedList;
+
+    // save in the db
+    await HiveServices.updateSingleTodo(
+      listEntityId: listEntity.id,
+      todoEntity: todoEntity,
+    );
+
+    // return updated list entity
+    return ListEntity(
+      id: listEntity.id,
+      title: listEntity.title,
+      label: listEntity.label,
+      date: listEntity.date,
+      todos: updatedList.firstWhere((list) => list.id == listEntity.id).todos,
+      time: listEntity.time,
+      isPinned: listEntity.isPinned,
+    );
   }
 }

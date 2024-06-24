@@ -1,5 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../router/app_routes.dart';
+import '../../services/todo_list.dart';
+import '../../state/todo_list_notifier.dart';
+import '../../state/todo_state.dart';
 
 import '../../constants/color_constant.dart';
 import '../../entities/list_entity.dart';
@@ -32,6 +38,19 @@ class _AllListsWidgetState extends ConsumerState<ListsWidget> {
     isExpandedList = List.filled(widget.filteredTodoList.length, false);
   }
 
+  void _onComplete({
+    required TodoEntity todo,
+    required ListEntity list,
+  }) async {
+    TodoList todoList = TodoList();
+
+    todoList.completeTodo(listId: list.id, todoEntity: todo);
+
+    ref
+        .watch(todoListProvider.notifier)
+        .setTodoList([...TodoState.todoListState]);
+  }
+
   @override
   Widget build(BuildContext context) {
     bool isDark = ref.watch(isDarkThemeProvider);
@@ -44,6 +63,10 @@ class _AllListsWidgetState extends ConsumerState<ListsWidget> {
             setState(() {
               isExpandedList[index] = !isExpandedList[index];
             });
+          },
+          onDoubleTap: () {
+            Navigator.pushNamed(context, AppRoutes.updateListView,
+                arguments: singleList);
           },
           child: Card(
             color: isDark
@@ -92,7 +115,22 @@ class _AllListsWidgetState extends ConsumerState<ListsWidget> {
                           child: ListTile(
                             contentPadding: const EdgeInsets.all(0),
                             leading: IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                bool confirmedCompelet = !singleTodo.isComplete;
+
+                                TodoEntity updatedTodo = TodoEntity(
+                                  id: singleTodo.id,
+                                  todo: singleTodo.todo,
+                                  isComplete: confirmedCompelet,
+                                );
+
+                                log('Updated todo : $updatedTodo');
+
+                                _onComplete(
+                                  todo: updatedTodo,
+                                  list: singleList,
+                                );
+                              },
                               icon: Icon(
                                 singleTodo.isComplete
                                     ? Icons.check_box_outlined

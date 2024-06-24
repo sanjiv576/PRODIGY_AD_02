@@ -1,6 +1,7 @@
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import '../constants/hive_table_constants.dart';
+import '../entities/todo_entity.dart';
 import '../models/list_hive_model.dart';
 import '../models/todo_hive_model.dart';
 
@@ -62,6 +63,69 @@ class HiveServices {
       }
     }
   }
+
+
+  // complete todo
+  static Future<void> completeSingleTodo(
+      {required String listEntityId, required TodoEntity todoEntity}) async {
+    TodoHiveModel todoHiveModel = TodoHiveModel.fromEntity(todoEntity);
+    // get box
+    final box = Hive.box<ListHiveModel>(listBoxName);
+
+    List<ListHiveModel> data = box.values.toList();
+
+    for (ListHiveModel listHiveModel in data) {
+      if (listHiveModel.id == listEntityId) {
+        for (TodoHiveModel singleTodoHiveModel in listHiveModel.todos) {
+          if (singleTodoHiveModel.id == todoEntity.id) {
+            singleTodoHiveModel.isComplete = todoHiveModel.isComplete;
+
+            // save the modified list to persist the changes
+            await listHiveModel.save();
+            return;
+          }
+        }
+      }
+    }
+  }
+  // complete todo
+  static Future<void> updateSingleTodo(
+      {required String listEntityId, required TodoEntity todoEntity}) async {
+        
+    TodoHiveModel todoHiveModel = TodoHiveModel.fromEntity(todoEntity);
+    // get box
+    final box = Hive.box<ListHiveModel>(listBoxName);
+
+    List<ListHiveModel> data = box.values.toList();
+
+    for (ListHiveModel listHiveModel in data) {
+      if (listHiveModel.id == listEntityId) {
+        for (TodoHiveModel singleTodoHiveModel in listHiveModel.todos) {
+          if (singleTodoHiveModel.id == todoEntity.id) {
+            singleTodoHiveModel.todo = todoHiveModel.todo;
+
+            // save the modified list to persist the changes
+            await listHiveModel.save();
+            return;
+          }
+        }
+      }
+    }
+  }
+
+  // Future<void> _updateTodoInHive(TodoEntity updatedTodo, String listId) async {
+  //   final listBox = Hive.box<ListHiveModel>(HiveTableConstants.listBox);
+  //   List<ListHiveModel>? listHiveModel =
+  //       listBox.values.firstWhereOrNull((list) => list.id == listId).toList();
+
+  //   for (var i = 0; i < listHiveModel.todos.length; i++) {
+  //     if (listHiveModel.todos[i].id == updatedTodo.id) {
+  //       listHiveModel.todos[i] = TodoHiveModel.fromEntity(updatedTodo);
+  //       await listBox.put(listHiveModel.key, listHiveModel);
+  //       break;
+  //     }
+  //   }
+  // }
 
   // remove database
   static Future<void> clearAllBox() async {
