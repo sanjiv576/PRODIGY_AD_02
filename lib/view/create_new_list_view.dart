@@ -281,7 +281,10 @@ class _CreateNewListViewState extends ConsumerState<CreateNewListView> {
                               },
                               child: Text(
                                 label.text,
-                                style: Theme.of(context).textTheme.bodyLarge,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(color: Colors.white),
                               ),
                             ),
                             const SizedBox(width: 16),

@@ -1,8 +1,8 @@
 class TodoEntity {
   final String id;
-  final String todo;
+  String todo;
 
-  final bool isComplete;
+  bool isComplete;
 
   TodoEntity({
     required this.id,
