@@ -1,5 +1,8 @@
 import 'dart:developer';
 
+import 'package:todolist/models/list_hive_model.dart';
+import 'package:todolist/models/todo_hive_model.dart';
+import 'package:todolist/services/hive_services.dart';
 import 'package:uuid/uuid.dart';
 
 import '../entities/list_entity.dart';
@@ -22,9 +25,14 @@ enum LabelEnum {
 }
 
 class TodoList {
-  ListEntity _addTodo({required String todo, required ListEntity existList}) {
+  Future<ListEntity> _addTodo(
+      {required String todo, required ListEntity existList}) async {
     TodoEntity newTodoEnity = TodoEntity(id: const Uuid().v4(), todo: todo);
 
+    // for hive integration
+    TodoHiveModel newTodoHiveModel = TodoHiveModel.fromEntity(newTodoEnity);
+
+    // adding data to the state
     for (ListEntity singleListEntity in TodoState.todoListState) {
       if (singleListEntity.id == existList.id) {
         // add todo to the existing list
@@ -33,16 +41,19 @@ class TodoList {
       }
     }
 
+    // save in the db
+    await HiveServices.addSingleTodo(newTodoHiveModel, existList.id);
+
     return existList;
   }
 
-  ListEntity createTodoList({
+  Future<ListEntity> createTodoList({
     required String title,
     required String todo,
     required String label,
     bool? isPinned,
     required ListEntity? newList,
-  }) {
+  }) async {
     log('title: $title, todo: $todo, label: $label, isPinned: $isPinned');
 
     // ----------- creating only new todos from existed the list------------------------------
@@ -58,7 +69,7 @@ class TodoList {
       todo: todo,
     );
 
-    ListEntity newTodoList = ListEntity(
+    ListEntity newListTodoList = ListEntity(
       id: const Uuid().v4(),
       title: title,
       label: label,
@@ -68,9 +79,13 @@ class TodoList {
       time: DateTimeConverter.getCurrentTime(),
     );
 
-    TodoState.todoListState.add(newTodoList);
+    TodoState.todoListState.add(newListTodoList);
 
-    return newTodoList;
+    // save the new list into the hive
+    ListHiveModel newListHiveModel = ListHiveModel.fromEntity(newListTodoList);
+    await HiveServices.addListHive(newListHiveModel);
+
+    return newListTodoList;
   }
 
   List<ListEntity> getPinnedList() {
