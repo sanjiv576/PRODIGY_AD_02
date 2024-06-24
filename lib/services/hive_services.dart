@@ -64,7 +64,6 @@ class HiveServices {
     }
   }
 
-
   // complete todo
   static Future<void> completeSingleTodo(
       {required String listEntityId, required TodoEntity todoEntity}) async {
@@ -88,10 +87,10 @@ class HiveServices {
       }
     }
   }
+
   // complete todo
   static Future<void> updateSingleTodo(
       {required String listEntityId, required TodoEntity todoEntity}) async {
-        
     TodoHiveModel todoHiveModel = TodoHiveModel.fromEntity(todoEntity);
     // get box
     final box = Hive.box<ListHiveModel>(listBoxName);
@@ -113,19 +112,37 @@ class HiveServices {
     }
   }
 
-  // Future<void> _updateTodoInHive(TodoEntity updatedTodo, String listId) async {
-  //   final listBox = Hive.box<ListHiveModel>(HiveTableConstants.listBox);
-  //   List<ListHiveModel>? listHiveModel =
-  //       listBox.values.firstWhereOrNull((list) => list.id == listId).toList();
+  // delete a todo
+  static Future<void> deleteSingleTodo(
+      {required String listEntityId,
+      required TodoHiveModel todoHiveModel}) async {
+    // get box
+    final box = Hive.box<ListHiveModel>(listBoxName);
 
-  //   for (var i = 0; i < listHiveModel.todos.length; i++) {
-  //     if (listHiveModel.todos[i].id == updatedTodo.id) {
-  //       listHiveModel.todos[i] = TodoHiveModel.fromEntity(updatedTodo);
-  //       await listBox.put(listHiveModel.key, listHiveModel);
-  //       break;
-  //     }
-  //   }
-  // }
+    List<ListHiveModel> data = box.values.toList();
+
+    for (ListHiveModel listHiveModel in data) {
+      if (listHiveModel.id == listEntityId) {
+        listHiveModel.todos = listHiveModel.todos
+            .where((singleTodo) => singleTodo.id != todoHiveModel.id)
+            .toList();
+        // delete the list if the todos list is empty
+        if (listHiveModel.todos.isEmpty) {
+          deleteList(listHiveModel: listHiveModel);
+        }
+
+        await listHiveModel.save();
+        return;
+      }
+    }
+  }
+
+  // delete list
+  static Future<void> deleteList({required ListHiveModel listHiveModel}) async {
+    final box = Hive.box<ListHiveModel>(listBoxName);
+
+    await box.delete(listHiveModel.key);
+  }
 
   // remove database
   static Future<void> clearAllBox() async {

@@ -1,16 +1,18 @@
 import 'dart:developer';
 
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import '../constants/color_constant.dart';
+import '../entities/list_entity.dart';
 import '../entities/todo_entity.dart';
 import '../services/todo_list.dart';
 import '../state/todo_list_notifier.dart';
 import '../state/todo_state.dart';
 import 'home_view.dart';
-
-import '../entities/list_entity.dart';
+import 'widgets/show_snackbar.dart';
 
 class UpdateListView extends ConsumerStatefulWidget {
   const UpdateListView({super.key});
@@ -88,6 +90,33 @@ class _UpdateListViewState extends ConsumerState<UpdateListView> {
           .setTodoList([...TodoState.todoListState]);
 
       log('Update todo: $updatedTodo');
+
+      // clear all widget when list is created
+      _clearAllState();
+    }
+  }
+
+  void _addNewTodo() async {
+    if (_formKey.currentState!.validate()) {
+      String todo = _todoController.text.trim();
+
+      listEntity = await todoList.createTodoList(
+        title: listEntity.title,
+        todo: todo,
+        label: chosenLabel,
+        isPinned: isPinned,
+        newList: listEntity, // is passed to track this list is old or new
+      );
+      setState(() {}); // update state
+
+      ref.watch(todoListProvider.notifier).setTodoList(TodoState.todoListState);
+
+      showSnackbarMsg(
+        context: context,
+        targetTitle: 'Success',
+        targetMessage: 'Todo added successfully.',
+        type: ContentType.success,
+      );
 
       // clear all widget when list is created
       _clearAllState();
@@ -205,21 +234,27 @@ class _UpdateListViewState extends ConsumerState<UpdateListView> {
                   },
                 ),
                 verticalGap,
-                if (selectTodo != null) ...{
-                  TextFormField(
-                    controller: _todoController,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please, add to-do.';
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                      labelText: 'Update Todo',
-                      labelStyle: Theme.of(context).textTheme.labelSmall,
-                    ),
+                // if (selectTodo != null) ...[
+                TextFormField(
+                  controller: _todoController,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please, add to-do.';
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                    prefixIcon: IconButton(
+                        onPressed: () {
+                          _addNewTodo();
+                        },
+                        icon: const Icon(FontAwesomeIcons.squarePlus)),
+                    labelText: selectTodo == null ? 'Todo' : 'Update Todo',
+                    labelStyle: Theme.of(context).textTheme.labelSmall,
                   ),
-                  verticalGap,
+                ),
+                verticalGap,
+                if (selectTodo != null) ...[
                   ElevatedButton(
                     onPressed: () {
                       _submit(oldTodo: singleTodo, list: listEntity);
@@ -232,7 +267,8 @@ class _UpdateListViewState extends ConsumerState<UpdateListView> {
                           .copyWith(color: Colors.white),
                     ),
                   ),
-                },
+                ],
+
                 const Spacer(),
                 const Divider(
                   color: Color(0xFFDADADA),

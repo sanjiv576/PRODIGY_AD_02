@@ -27,6 +27,7 @@ class ListsWidget extends ConsumerStatefulWidget {
 
 class _AllListsWidgetState extends ConsumerState<ListsWidget> {
   List<ListEntity> allTodoList = [];
+  TodoList todoList = TodoList();
 
   List<bool> isExpandedList = [];
   @override
@@ -38,12 +39,17 @@ class _AllListsWidgetState extends ConsumerState<ListsWidget> {
     isExpandedList = List.filled(widget.filteredTodoList.length, false);
   }
 
+  void _deleteTodo(TodoEntity singleTodo, ListEntity singleList) async {
+    List<ListEntity> updatedList = await todoList.deleteTodo(
+        todoEntity: singleTodo, listEntity: singleList);
+
+    ref.watch(todoListProvider.notifier).setTodoList(updatedList);
+  }
+
   void _onComplete({
     required TodoEntity todo,
     required ListEntity list,
   }) async {
-    TodoList todoList = TodoList();
-
     todoList.completeTodo(listId: list.id, todoEntity: todo);
 
     ref
@@ -108,6 +114,8 @@ class _AllListsWidgetState extends ConsumerState<ListsWidget> {
                             child: const Icon(Icons.cancel),
                           ),
                           onDismissed: (direction) {
+                            _deleteTodo(singleTodo, singleList);
+
                             setState(() {
                               singleList.todos.removeAt(todoIndex);
                             });

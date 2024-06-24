@@ -189,4 +189,33 @@ class TodoList {
       isPinned: listEntity.isPinned,
     );
   }
+
+  // delete a todo
+
+  Future<List<ListEntity>> deleteTodo(
+      {required TodoEntity todoEntity, required ListEntity listEntity}) async {
+    List<ListEntity> updatedList = [];
+
+    for (ListEntity list in TodoState.todoListState) {
+      if (list.id == listEntity.id) {
+        list.todos = list.todos
+            .where((singleTodo) => singleTodo.id != todoEntity.id)
+            .toList();
+      }
+
+      // add only whose length todos length is not empty
+      if (list.todos.isNotEmpty) {
+        updatedList.add(list);
+      }
+    }
+
+    TodoHiveModel todoHiveModel = TodoHiveModel.fromEntity(todoEntity);
+
+    // delete from db
+    await HiveServices.deleteSingleTodo(
+        listEntityId: listEntity.id, todoHiveModel: todoHiveModel);
+
+    TodoState.todoListState = updatedList;
+    return updatedList;
+  }
 }
