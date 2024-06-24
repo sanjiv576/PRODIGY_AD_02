@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+
 import '../../services/hive_services.dart';
 import '../../state/todo_list_notifier.dart';
-import 'show_snackbar.dart';
-
 import '../home_view.dart';
+import 'show_snackbar.dart';
 
 class TopBarWidget extends StatelessWidget {
   const TopBarWidget({

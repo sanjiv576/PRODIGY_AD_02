@@ -7,7 +7,7 @@ class ListEntity {
   final String label;
   final String date; // date when todo list is created
   final String time; // time when todo list is created
-  final List<TodoEntity> todos;
+  List<TodoEntity> todos;
 
   ListEntity({
     required this.id,
