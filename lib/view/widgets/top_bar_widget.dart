@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:todolist/services/hive_services.dart';
+import 'package:todolist/state/todo_list_notifier.dart';
 
 import '../home_view.dart';
 
@@ -32,6 +34,15 @@ class TopBarWidget extends StatelessWidget {
           onPressed: () {},
           icon: const Icon(
             Icons.search,
+          ),
+        ),
+        IconButton(
+          onPressed: () async {
+            await HiveServices.clearAllBox();
+            ref.watch(todoListProvider.notifier).setTodoList([]);
+          },
+          icon: const Icon(
+            Icons.delete,
           ),
         ),
         IconButton(
