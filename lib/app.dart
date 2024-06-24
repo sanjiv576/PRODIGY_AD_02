@@ -2,22 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'router/app_routes.dart';
+import 'state/app_theme_state.dart';
 import 'themes/app_theme.dart';
-import 'view/home_view.dart';
-
-// class AppView extends StatelessWidget {
-//   const AppView({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       theme: AppThemes.appDarkTheme(),
-//       initialRoute: AppRoutes.introRoute,
-//       routes: AppRoutes.getAppRoutes(),
-//     );
-//   }
-// }
 
 class AppView extends ConsumerWidget {
   const AppView({super.key});
@@ -29,7 +15,7 @@ class AppView extends ConsumerWidget {
       theme: ref.watch(isDarkThemeProvider)
           ? AppThemes.appDarkTheme()
           : AppThemes.appLightTheme(),
-      initialRoute: AppRoutes.introRoute,
+      initialRoute: AppRoutes.splashRoute,
       routes: AppRoutes.getAppRoutes(),
     );
   }

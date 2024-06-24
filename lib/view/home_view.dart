@@ -1,22 +1,21 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants/color_constant.dart';
 import '../entities/list_entity.dart';
 import '../router/app_routes.dart';
+import '../state/app_theme_state.dart';
 import '../state/todo_list_notifier.dart';
 import 'widgets/empty_list_widgets.dart';
 import 'widgets/lists_widget.dart';
 import 'widgets/top_bar_widget.dart';
 
-final isDarkThemeProvider = StateProvider<bool>((ref) => false);
+// final isDarkThemeProvider = StateProvider<bool>((ref) => false);
 
 final pinnedListProvider = Provider<List<ListEntity>>((ref) {
   final todoList = ref.watch(todoListProvider);
   return todoList.where((list) => list.isPinned).toList();
 });
-
 
 class HomeView extends ConsumerStatefulWidget {
   const HomeView({super.key});
@@ -57,7 +56,6 @@ class _HomeViewState extends ConsumerState<HomeView>
           : Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-               
                 IconButton.filled(
                   color: Colors.white,
                   highlightColor: Colors.green,

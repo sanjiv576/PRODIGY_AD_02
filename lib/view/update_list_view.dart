@@ -9,9 +9,9 @@ import '../constants/color_constant.dart';
 import '../entities/list_entity.dart';
 import '../entities/todo_entity.dart';
 import '../services/todo_list.dart';
+import '../state/app_theme_state.dart';
 import '../state/todo_list_notifier.dart';
 import '../state/todo_state.dart';
-import 'home_view.dart';
 import 'widgets/show_snackbar.dart';
 
 class UpdateListView extends ConsumerStatefulWidget {

@@ -2,15 +2,15 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../state/todo_list_notifier.dart';
-import '../state/todo_state.dart';
+
 import '../constants/color_constant.dart';
+import '../entities/list_entity.dart';
 import '../entities/todo_entity.dart';
 import '../services/todo_list.dart';
-import 'home_view.dart';
+import '../state/app_theme_state.dart';
+import '../state/todo_list_notifier.dart';
+import '../state/todo_state.dart';
 import 'widgets/show_snackbar.dart';
-
-import '../entities/list_entity.dart';
 
 class CreateNewListView extends ConsumerStatefulWidget {
   const CreateNewListView({super.key});

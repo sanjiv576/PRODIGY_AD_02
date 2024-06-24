@@ -2,15 +2,15 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../router/app_routes.dart';
-import '../../services/todo_list.dart';
-import '../../state/todo_list_notifier.dart';
-import '../../state/todo_state.dart';
 
 import '../../constants/color_constant.dart';
 import '../../entities/list_entity.dart';
 import '../../entities/todo_entity.dart';
-import '../home_view.dart';
+import '../../router/app_routes.dart';
+import '../../services/todo_list.dart';
+import '../../state/app_theme_state.dart';
+import '../../state/todo_list_notifier.dart';
+import '../../state/todo_state.dart';
 import 'horizontal_row_label_widgets.dart';
 
 class ListsWidget extends ConsumerStatefulWidget {

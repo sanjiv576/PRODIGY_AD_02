@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../services/app_launch.dart';
+
 import '../router/app_routes.dart';
 
 class IntroView extends StatelessWidget {
@@ -30,8 +32,10 @@ class IntroView extends StatelessWidget {
             ),
             verticalGap,
             ElevatedButton(
-              onPressed: () =>
-                  Navigator.pushNamed(context, AppRoutes.homeRoute),
+              onPressed: () {
+                AppLaunch.setAppLaunch(true);
+                Navigator.pushNamed(context, AppRoutes.homeRoute);
+              },
               child: Text(
                 'Continue',
                 style: Theme.of(context)

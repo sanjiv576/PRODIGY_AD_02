@@ -1,11 +1,11 @@
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
+
 import '../constants/hive_table_constants.dart';
+import '../entities/list_entity.dart';
 import '../entities/todo_entity.dart';
 import '../models/list_hive_model.dart';
 import '../models/todo_hive_model.dart';
-
-import '../entities/list_entity.dart';
 
 class HiveServices {
   static const String listBoxName = HiveTableConstants.listBox;
