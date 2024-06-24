@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../services/hive_services.dart';
 
 import '../entities/list_entity.dart';
+import '../services/hive_services.dart';
 
 class TodoListNotifier extends StateNotifier<List<ListEntity>> {
   TodoListNotifier() : super(HiveServices.getAllListsHive());  // fetch data from db

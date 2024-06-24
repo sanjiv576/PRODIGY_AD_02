@@ -1,4 +1,4 @@
-import 'package:todolist/view/update_list_view.dart';
+import '../view/update_list_view.dart';
 
 import '../view/create_new_list_view.dart';
 import '../view/home_view.dart';
