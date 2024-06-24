@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'services/hive_services.dart';
 
 import 'app.dart';
+import 'services/hive_services.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
