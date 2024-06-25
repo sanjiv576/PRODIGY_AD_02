@@ -20,15 +20,6 @@ TodoList App is a Flutter-based mobile application designed to streamline task m
 - **Customizable Themes**: Personalize your experience with light and dark themes.
 - **Data Refresh**: Stay updated with manual and automatic data refresh using Riverpod for state management.
 
-## Getting Started
-
-To get started with TodoList App, follow these steps:
-
-1. Clone this repository.
-2. Ensure you have Flutter installed. If not, follow the [Flutter installation guide](https://flutter.dev/docs/get-started/install).
-3. Open the project in your preferred IDE.
-4. Run the app on an emulator or physical device.
-
 ## Screenshots
 
 ![Screenshot 1](https://github.com/sanjiv576/PRODIGY_AD_02/blob/master/assets/1.png)
