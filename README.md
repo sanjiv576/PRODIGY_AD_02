@@ -31,12 +31,11 @@ To get started with TodoList App, follow these steps:
 
 ## Screenshots
 
-![Screenshot 1](https://drive.google.com/file/d/1BRF5zczCb-fYN8apfd93VdKZYDnYpgoR/view?usp=sharing)
-![Screenshot 2](https://drive.google.com/file/d/1PP9rYQ7OyluMUWEIh6KEw1k1aLkRQC1o/view?usp=sharing)
-![Screenshot 3](https://your-screenshot-url.com)
+![Screenshot 1](https://github.com/sanjiv576/PRODIGY_AD_02/blob/master/assets/1.png)
+<br>
+![Screenshot 2](https://github.com/sanjiv576/PRODIGY_AD_02/blob/master/assets/2.png)
+<br>
+![Screenshot 3](https://github.com/sanjiv576/PRODIGY_AD_02/blob/master/assets/3.png)
 
-## Contributing
-
-Contributions are welcome! Fork the repository and submit a pull request.
 
 
