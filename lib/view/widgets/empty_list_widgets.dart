@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../services/tutorial.dart';
 
 import '../../router/app_routes.dart';
 
@@ -34,8 +35,14 @@ class EmptyListWidgets extends StatelessWidget {
                 color: Colors.white,
               ),
               iconAlignment: IconAlignment.start,
-              onPressed: () =>
-                  Navigator.pushNamed(context, AppRoutes.createNewListRoute),
+              onPressed: () async {
+                // set off the tutorial
+
+                if (await Tutorial.isTutorialAlreadyShown() == false) {
+                  Tutorial.setTutorialValue(true);
+                }
+                Navigator.pushNamed(context, AppRoutes.createNewListRoute);
+              },
               label: Text(
                 'New List',
                 style: Theme.of(context)
