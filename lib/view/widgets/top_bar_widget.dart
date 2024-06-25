@@ -112,7 +112,8 @@ class _TopBarWidgetState extends State<TopBarWidget> {
           TargetContent(
             align: ContentAlign.bottom,
             builder: (context, controller) {
-              return Expanded(
+              return Container(
+                padding: const EdgeInsets.all(16),
                 child: Center(
                   child: Text(
                     'Click here to load the latest data.',
@@ -136,7 +137,8 @@ class _TopBarWidgetState extends State<TopBarWidget> {
           TargetContent(
             align: ContentAlign.bottom,
             builder: (context, controller) {
-              return Expanded(
+              return Container(
+                padding: const EdgeInsets.all(16),
                 child: Center(
                   child: Text(
                     'Click here to delete all todos.',
@@ -160,7 +162,8 @@ class _TopBarWidgetState extends State<TopBarWidget> {
           TargetContent(
             align: ContentAlign.bottom,
             builder: (context, controller) {
-              return Expanded(
+              return Container(
+                padding: const EdgeInsets.all(16),
                 child: Center(
                   child: Text(
                     'Click here to toggle application theme.',
@@ -182,13 +185,12 @@ class _TopBarWidgetState extends State<TopBarWidget> {
       onFinish: () {
         log("finish");
       },
-      onClickTargetWithTapPosition: (target, tapDetails) {
-        log("target: $target");
-        log("Clickd at position local: ${tapDetails.localPosition} - global: ${tapDetails.globalPosition}");
-      },
-      onClickTarget: (target) {
-        print(target);
-      },
+      // onClickTargetWithTapPosition: (target, tapDetails) {
+
+      // },
+      // onClickTarget: (target) {
+
+      // },
     );
     tutorial.show(context: context);
   }
